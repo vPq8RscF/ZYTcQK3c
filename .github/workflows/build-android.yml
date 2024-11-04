@@ -1,0 +1,30 @@
+name: build android
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: '${{ secrets.WEST_REPOSITORY_OWNER }}/nts-west-native-android'
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.WEST_CHECKOUT_TOKEN }}
+      - name: Hello world
+        run: |
+          echo "Hello world"
+          ls -lia
